@@ -12,6 +12,7 @@ public class QuizActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizActivity";
     private static final String KEY_INDEX = "index";
+    private static final String ANSWER_KEY = "answered_quyestions";
     private Button trueButton;
     private Button falseButton;
     private Button nextButton;
@@ -24,6 +25,8 @@ public class QuizActivity extends AppCompatActivity {
             new Question(R.string.question_americas, true),
             new Question(R.string.question_asia, true)
     };
+
+    private boolean answeredQuestions[] = new boolean[questionBank.length];
     private int currentIndex = 0;
 
     @Override
@@ -36,6 +39,7 @@ public class QuizActivity extends AppCompatActivity {
         //Getting the index from the savedInstance, which is saved when the screen is rotated or activity is destroyed by OS to conserve memory
         if(savedInstanceState != null) {
             currentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+            answeredQuestions = savedInstanceState.getBooleanArray(ANSWER_KEY);
         }
 
         trueButton = (Button) findViewById(R.id.true_button);
@@ -49,7 +53,10 @@ public class QuizActivity extends AppCompatActivity {
         trueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isAnswerTrue(true);
+                if(!answeredQuestions[currentIndex]) {
+                    answeredQuestions[currentIndex] = true;
+                    isAnswerTrue(true);
+                }
             }
         });
 
@@ -57,7 +64,10 @@ public class QuizActivity extends AppCompatActivity {
         falseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isAnswerTrue(false);
+                if(!answeredQuestions[currentIndex]) {
+                    answeredQuestions[currentIndex] = true;
+                    isAnswerTrue(false);
+                }
             }
         });
 
@@ -96,6 +106,7 @@ public class QuizActivity extends AppCompatActivity {
         Log.d(TAG, "onSaveInstanceState called");
 
         outState.putInt(KEY_INDEX, currentIndex);
+        outState.putBooleanArray(ANSWER_KEY, answeredQuestions);
     }
 
     @Override
