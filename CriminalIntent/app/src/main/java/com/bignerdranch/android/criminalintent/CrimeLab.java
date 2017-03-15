@@ -6,39 +6,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by krunalpa on 3/14/17.
- */
-
 public class CrimeLab {
-    private static CrimeLab crimeLab;
-    private List<Crime> crimes;
+    private static CrimeLab sCrimeLab;
+
+    private List<Crime> mCrimes;
+
+    public static CrimeLab get(Context context) {
+        if (sCrimeLab == null) {
+            sCrimeLab = new CrimeLab(context);
+        }
+
+        return sCrimeLab;
+    }
 
     private CrimeLab(Context context) {
-        crimes = new ArrayList<>();
+        mCrimes = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             Crime crime = new Crime();
             crime.setTitle("Crime #" + i);
-            crime.setSolved(i % 2 == 0); // Every other one
-            crimes.add(crime);
+            crime.setSolved(i % 2 == 0);
+            mCrimes.add(crime);
         }
-    }
-
-    public static CrimeLab get(Context context) {
-        if(crimeLab == null) {
-            crimeLab = new CrimeLab(context);
-        }
-
-        return crimeLab;
     }
 
     public List<Crime> getCrimes() {
-        return crimes;
+        return mCrimes;
     }
 
-    public Crime getCrimeByUUID(UUID id) {
-        for(Crime crime:crimes) {
-            if(crime.getId().equals(id)) {
+    public Crime getCrime(UUID id) {
+        for (Crime crime : mCrimes) {
+            if (crime.getId().equals(id)) {
                 return crime;
             }
         }

@@ -1,20 +1,16 @@
 package com.bignerdranch.android.criminalintent;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
-/**
- * Created by krunalpa on 3/14/17.
- */
-
 public abstract class SingleFragmentActivity extends AppCompatActivity {
+
     protected abstract Fragment createFragment();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
 
